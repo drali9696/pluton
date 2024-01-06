@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.query {
+    font-family: 'Bruno Ace SC', sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 3rem!important;
+    letter-spacing: 0.15rem;
+}
+
+.answer {
+    line-height: 1.67;
+    text-wrap: pretty;
+    img{
+        width: 16px;
+    }
+}
+
+.title{
+    font-family: 'Bruno Ace SC', sans-serif;
+    font-weight: bold;
+    letter-spacing: 0.15rem;
+}
+
+.subtitle {
+    font-family: 'Bruno Ace SC', sans-serif;
+    letter-spacing: 0.15rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.sources img {
+    width: 16px;
+}
+
+.link{
+    display: flex;
+    gap: 0.5rem;
+    margin-right: 0.3rem;
+    align-items: center;
+}
+.link.display-before::before {
+    font-size: 15px;
+    content: attr(data-customattribute);
+}
