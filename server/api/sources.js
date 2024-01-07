@@ -5,7 +5,7 @@ import { cleanSourceText } from "../utils/sources.js";
 
 const searchHandler = async (req, res) => {
   try {
-    const { query, model } = req.body;
+    const { query } = req.body;
 
     const sourceCount = 4;
 
@@ -59,9 +59,8 @@ const searchHandler = async (req, res) => {
     });
 
     const finalLinks = filteredLinks.slice(0, sourceCount);
-
     // SCRAPE TEXT FROM LINKS
-    const sources = await Promise.all(
+    const sources = await Promise.allSettled(
       finalLinks.map(async (link) => {
         const response = await fetch(link);
         const html = await response.text();
@@ -76,8 +75,9 @@ const searchHandler = async (req, res) => {
         }
       })
     );
-
-    let filteredSources = sources.filter((source) => source !== undefined);
+    let filteredSources = sources
+      .filter((source) => source !== undefined && source.status !== "rejected")
+      .map((source) => source.value);
 
     for (const source of filteredSources) {
       source.text = source.text.slice(0, 1500);
@@ -85,6 +85,7 @@ const searchHandler = async (req, res) => {
 
     res.status(200).json({ sources: filteredSources });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ sources: [] });
   }
 };
