@@ -1,17 +1,17 @@
 import { createParser } from "eventsource-parser";
 
-export const OpenAIStream = async (prompt, apiKey, response) => {
+export const OpenAIStream = async (prompt, response) => {
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
 
   const res = await fetch("https://api.openai.com/v1/chat/completions", {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
+      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
     },
     method: "POST",
     body: JSON.stringify({
-      model: "gpt-4-1106-preview",
+      model: process.env.OPENAI_API_MODEL,
       messages: [
         {
           role: "system",

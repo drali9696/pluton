@@ -17,8 +17,8 @@ export const Search: FC<SearchProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [query, setQuery] = useState<string>("");
-  const [apiKey, setApiKey] = useState<string>("");
-  const [showSettings, setShowSettings] = useState<boolean>(false);
+  // const [apiKey, setApiKey] = useState<string>("");
+  // const [showSettings, setShowSettings] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleSearch = async () => {
@@ -68,7 +68,7 @@ export const Search: FC<SearchProps> = ({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt, apiKey }),
+        body: JSON.stringify({ prompt }),
       });
 
       if (!response.ok) {
@@ -119,32 +119,32 @@ export const Search: FC<SearchProps> = ({
     }
   };
 
-  const handleSave = () => {
-    if (apiKey.length !== 51) {
-      alert("Please enter a valid API key.");
-      return;
-    }
+  // const handleSave = () => {
+  //   if (apiKey.length !== 51) {
+  //     alert("Please enter a valid API key.");
+  //     return;
+  //   }
 
-    localStorage.setItem("CLARITY_KEY", apiKey);
+  //   localStorage.setItem("CLARITY_KEY", apiKey);
 
-    setShowSettings(false);
-    inputRef.current?.focus();
-  };
+  //   setShowSettings(false);
+  //   inputRef.current?.focus();
+  // };
 
-  const handleClear = () => {
-    localStorage.removeItem("CLARITY_KEY");
+  // const handleClear = () => {
+  //   localStorage.removeItem("CLARITY_KEY");
 
-    setApiKey("");
-  };
+  //   setApiKey("");
+  // };
 
   useEffect(() => {
-    const CLARITY_KEY = localStorage.getItem("CLARITY_KEY");
+    //   const CLARITY_KEY = localStorage.getItem("CLARITY_KEY");
 
-    if (CLARITY_KEY) {
-      setApiKey(CLARITY_KEY);
-    } else {
-      setShowSettings(true);
-    }
+    //   if (CLARITY_KEY) {
+    //     setApiKey(CLARITY_KEY);
+    //   } else {
+    //     setShowSettings(true);
+    //   }
 
     inputRef.current?.focus();
   }, []);
@@ -163,43 +163,44 @@ export const Search: FC<SearchProps> = ({
             <div className="ml-1 text-center text-4xl title">PLUTON</div>
           </div>
 
-          {apiKey.length === 51 ? (
-            <div className="relative w-full">
-              <IconSearch className="text=[#D4D4D8] absolute top-3 w-10 left-1 h-6 rounded-full opacity-50 sm:left-3 sm:top-4 sm:h-8" />
+          <div className="relative w-full">
+            <IconSearch className="text=[#D4D4D8] absolute top-3 w-10 left-1 h-6 rounded-full opacity-50 sm:left-3 sm:top-4 sm:h-8" />
 
-              <input
-                ref={inputRef}
-                className="h-12 w-full rounded-full border border-zinc-600 bg-[#2A2A31] pr-12 pl-11 focus:border-zinc-800 focus:bg-[#18181C] focus:outline-none focus:ring-2 focus:ring-zinc-800 sm:h-16 sm:py-2 sm:pr-16 sm:pl-16 sm:text-lg"
-                type="text"
-                placeholder="Ask anything..."
-                value={query}
-                // eslint-disable-next-line jsx-a11y/no-autofocus
-                autoFocus
-                onChange={(e) => setQuery(e.target.value)}
-                onKeyDown={handleKeyDown}
+            <input
+              ref={inputRef}
+              className="h-12 w-full rounded-full border border-zinc-600 bg-[#2A2A31] pr-12 pl-11 focus:border-zinc-800 focus:bg-[#18181C] focus:outline-none focus:ring-2 focus:ring-zinc-800 sm:h-16 sm:py-2 sm:pr-16 sm:pl-16 sm:text-lg"
+              type="text"
+              placeholder="Ask anything..."
+              value={query}
+              // eslint-disable-next-line jsx-a11y/no-autofocus
+              autoFocus
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+
+            <button>
+              <IconArrowRight
+                onClick={handleSearch}
+                className="absolute right-2 top-2.5 h-7 w-7 rounded-full bg-blue-500 p-1 hover:cursor-pointer hover:bg-blue-600 sm:right-3 sm:top-3 sm:h-10 sm:w-10"
               />
-
-              <button>
-                <IconArrowRight
-                  onClick={handleSearch}
-                  className="absolute right-2 top-2.5 h-7 w-7 rounded-full bg-blue-500 p-1 hover:cursor-pointer hover:bg-blue-600 sm:right-3 sm:top-3 sm:h-10 sm:w-10"
-                />
-              </button>
-            </div>
+            </button>
+          </div>
+          {/* {apiKey.length === 51 ? (
+              <></>
           ) : (
             <div className="text-center text-[#D4D4D8]">
               Please enter your OpenAI API key.
             </div>
-          )}
+          )} */}
 
-          <button
+          {/* <button
             className="flex cursor-pointer items-center space-x-2 rounded-full border border-zinc-600 px-3 py-1 text-sm text-[#D4D4D8] hover:text-white"
             onClick={() => setShowSettings(!showSettings)}
           >
             {showSettings ? "Hide" : "Show"} Settings
-          </button>
+          </button> */}
 
-          {showSettings && (
+          {/* {showSettings && (
             <>
               <input
                 type="password"
@@ -230,7 +231,7 @@ export const Search: FC<SearchProps> = ({
                 </div>
               </div>
             </>
-          )}
+          )} */}
         </div>
       )}
     </>

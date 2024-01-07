@@ -6,8 +6,8 @@ export const config = {
 
 const handler = async (req, res) => {
   try {
-    const { prompt, apiKey } = await req.body;
-    const stream = await OpenAIStream(prompt, apiKey, res);
+    const { prompt } = await req.body;
+    const stream = await OpenAIStream(prompt, res);
     return new Response(stream);
   } catch (error) {
     console.error(error);
